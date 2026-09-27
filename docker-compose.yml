@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nero
+      POSTGRES_PASSWORD: nero
+      POSTGRES_DB: nero_cms
+    ports:
+      # Host port is configurable; defaults to 5432. Override via POSTGRES_PORT
+      # in a local .env (e.g. when 5432 is already taken by another project).
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nero -d nero_cms"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:

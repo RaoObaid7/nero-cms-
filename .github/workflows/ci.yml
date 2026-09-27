@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  DATABASE_URI: postgresql://nero:nero@localhost:5432/nero_cms
+  PAYLOAD_SECRET: ci-test-secret-do-not-use-in-production
+  NEXT_PUBLIC_SERVER_URL: http://localhost:3000
+  PREVIEW_SECRET: ci-test-preview-secret-do-not-use-in-production
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: nero
+          POSTGRES_PASSWORD: nero
+          POSTGRES_DB: nero_cms
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U nero -d nero_cms"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.4.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Format check
+        run: pnpm format:check
+
+      - name: Test
+        run: pnpm test
+
+      - name: Generate Payload types
+        run: pnpm --filter @nero/tuyba run generate:types
+
+      - name: Database smoke check
+        run: pnpm --filter @nero/tuyba run db:smoke
+
+      - name: Build
+        run: pnpm build
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @nero/tuyba exec playwright install --with-deps chromium
+
+      - name: End-to-end tests
+        run: pnpm --filter @nero/tuyba run e2e
+        env:
+          # Gates the test-only /api/e2e control surface. It 404s without both
+          # this flag and a matching secret, so it stays inert everywhere else.
+          E2E_TEST_MODE: "true"
+          E2E_TEST_SECRET: ci-e2e-secret-do-not-use-in-production
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/tuyba/playwright-report/
+          retention-days: 7

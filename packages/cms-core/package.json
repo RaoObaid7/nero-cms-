@@ -1,0 +1,33 @@
+{
+  "name": "@nero/cms-core",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Payload CMS configuration factory, base collections, roles and access helpers shared across NERO CMS applications. No customer-specific branching.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@nero/web-core": "workspace:*",
+    "@payloadcms/richtext-lexical": "3.89.0",
+    "payload": "3.89.0"
+  },
+  "peerDependencies": {
+    "@payloadcms/ui": "^3.0.0",
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@nero/tooling": "workspace:*",
+    "@payloadcms/ui": "3.89.0",
+    "@types/react": "19.3.0",
+    "react": "19.3.0"
+  }
+}

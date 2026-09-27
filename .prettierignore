@@ -1,0 +1,12 @@
+pnpm-lock.yaml
+.next/
+dist/
+coverage/
+node_modules/
+apps/*/src/payload-types.ts
+
+# Pre-existing planning documents, not reformatted as part of Sprint 1 tooling
+docs/PRD.md
+docs/DEPLOYMENT.md
+docs/implementation/SPRINT-01.md
+docs/implementation/ENGINEERING-RULES.md

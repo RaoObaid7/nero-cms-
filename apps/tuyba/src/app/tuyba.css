@@ -1,0 +1,676 @@
+/* ─── TUYBA Design System ─────────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap");
+@import "tailwindcss";
+
+/* ── Custom Properties ──────────────────────────────────────────────────── */
+:root {
+  --ty-bg: #ffffff;
+  --ty-bg-alt: #f8fafc;
+  --ty-bg-dark: #0f172a;
+  --ty-bg-dark-2: #1e293b;
+  --ty-accent: #059669;
+  --ty-accent-hover: #047857;
+  --ty-accent-light: #ecfdf5;
+  --ty-accent-border: #a7f3d0;
+  --ty-gold: #d97706;
+  --ty-text: #0f172a;
+  --ty-text-muted: #64748b;
+  --ty-text-faint: #94a3b8;
+  --ty-text-inverse: #f8fafc;
+  --ty-border: #e2e8f0;
+  --ty-border-dark: #334155;
+  --ty-radius-sm: 6px;
+  --ty-radius: 12px;
+  --ty-radius-lg: 20px;
+  --ty-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --ty-shadow: 0 4px 16px rgba(15, 23, 42, 0.08), 0 1px 4px rgba(15, 23, 42, 0.04);
+  --ty-shadow-lg: 0 20px 60px rgba(15, 23, 42, 0.14), 0 4px 16px rgba(15, 23, 42, 0.06);
+  --ty-font-head: "Outfit", system-ui, sans-serif;
+  --ty-font-body: "Work Sans", system-ui, sans-serif;
+  --ty-max-w: 1200px;
+  --ty-max-w-prose: 72ch;
+}
+
+/* ── Reset ────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--ty-font-body);
+  background: var(--ty-bg);
+  color: var(--ty-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+input {
+  font: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* ── Typography ──────────────────────────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--ty-font-head);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ty-text);
+}
+
+/* ── Utilities ───────────────────────────────────────────────────────────── */
+.ty-container {
+  max-width: var(--ty-max-w);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+/* ── Animations ──────────────────────────────────────────────────────────── */
+@keyframes ty-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes ty-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ty-slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.ty-anim-1 {
+  animation: ty-fade-up 0.55s ease both;
+}
+.ty-anim-2 {
+  animation: ty-fade-up 0.55s 0.1s ease both;
+}
+.ty-anim-3 {
+  animation: ty-fade-up 0.55s 0.2s ease both;
+}
+.ty-anim-4 {
+  animation: ty-fade-up 0.55s 0.3s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ty-anim-1,
+  .ty-anim-2,
+  .ty-anim-3,
+  .ty-anim-4 {
+    animation: none;
+  }
+}
+
+/* ── Article page layout ────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .ty-article-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .ty-article-sidebar {
+    position: static !important;
+  }
+}
+
+/* ── Prose / article body ────────────────────────────────────────────────── */
+.ty-prose {
+  font-family: var(--ty-font-body);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--ty-text);
+  max-width: var(--ty-max-w-prose);
+}
+
+.ty-prose > * + * {
+  margin-top: 1.25em;
+}
+
+.ty-prose h1,
+.ty-prose h2,
+.ty-prose h3,
+.ty-prose h4,
+.ty-prose h5,
+.ty-prose h6 {
+  font-family: var(--ty-font-head);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ty-text);
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
+.ty-prose h1 {
+  font-size: 2rem;
+}
+.ty-prose h2 {
+  font-size: 1.5rem;
+  padding-bottom: 0.4em;
+  border-bottom: 2px solid var(--ty-border);
+}
+.ty-prose h3 {
+  font-size: 1.2rem;
+}
+.ty-prose h4 {
+  font-size: 1.05rem;
+}
+
+.ty-prose p {
+  margin-top: 0;
+  margin-bottom: 1.2em;
+  color: #374151;
+}
+
+.ty-prose a {
+  color: var(--ty-accent);
+  text-decoration: underline;
+  text-decoration-color: var(--ty-accent-border);
+  text-underline-offset: 3px;
+  transition:
+    color 0.15s,
+    text-decoration-color 0.15s;
+}
+.ty-prose a:hover {
+  color: var(--ty-accent-hover);
+  text-decoration-color: var(--ty-accent-hover);
+}
+
+.ty-prose strong {
+  font-weight: 700;
+  color: var(--ty-text);
+}
+.ty-prose em {
+  font-style: italic;
+}
+
+.ty-prose ul,
+.ty-prose ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.2em;
+}
+.ty-prose ul {
+  list-style-type: disc;
+}
+.ty-prose ol {
+  list-style-type: decimal;
+}
+.ty-prose li {
+  margin-bottom: 0.4em;
+  color: #374151;
+}
+.ty-prose li::marker {
+  color: var(--ty-accent);
+}
+
+.ty-prose blockquote {
+  border-left: 4px solid var(--ty-accent);
+  background: var(--ty-accent-light);
+  margin: 1.75em 0;
+  padding: 1rem 1.25rem;
+  border-radius: 0 var(--ty-radius-sm) var(--ty-radius-sm) 0;
+  font-style: italic;
+  color: #374151;
+}
+.ty-prose blockquote p {
+  margin-bottom: 0;
+}
+
+.ty-prose code {
+  font-family: ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 0.875em;
+  background: #f1f5f9;
+  color: #0f172a;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.ty-prose pre {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--ty-radius-sm);
+  overflow-x: auto;
+  margin: 1.75em 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.ty-prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+.ty-prose hr {
+  border: none;
+  border-top: 2px solid var(--ty-border);
+  margin: 2.5em 0;
+}
+
+.ty-prose img {
+  border-radius: var(--ty-radius);
+  margin: 1.5em 0;
+  max-width: 100%;
+}
+
+.ty-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.75em 0;
+  font-size: 0.9rem;
+}
+.ty-prose th {
+  background: var(--ty-bg-alt);
+  font-family: var(--ty-font-head);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--ty-border);
+}
+.ty-prose td {
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--ty-border);
+  vertical-align: top;
+}
+.ty-prose tr:nth-child(even) td {
+  background: var(--ty-bg-alt);
+}
+
+/* ── Interactive helpers (CSS-only hover, no JS handlers needed) ─────────── */
+
+/* Nav links */
+.ty-nav-link {
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--ty-radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ty-text-muted);
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+.ty-nav-link:hover {
+  color: var(--ty-text);
+  background: var(--ty-bg-alt);
+}
+
+/* Dark admin button */
+.ty-btn-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: var(--ty-radius-sm);
+  background: var(--ty-bg-dark);
+  color: #f8fafc;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: var(--ty-font-head);
+  letter-spacing: -0.01em;
+  transition:
+    opacity 0.15s,
+    transform 0.15s;
+}
+.ty-btn-dark:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+/* Primary CTA button */
+.ty-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--ty-radius-sm);
+  background: var(--ty-accent);
+  color: #fff;
+  font-family: var(--ty-font-head);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.ty-btn-primary:hover {
+  background: var(--ty-accent-hover);
+  transform: translateY(-1px);
+}
+
+/* Ghost button on dark bg */
+.ty-btn-ghost-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--ty-radius-sm);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  font-family: var(--ty-font-head);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+.ty-btn-ghost-dark:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* Outline accent button */
+.ty-btn-outline-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ty-accent);
+  padding: 0.5rem 1rem;
+  border-radius: var(--ty-radius-sm);
+  border: 1px solid var(--ty-accent-border);
+  background: transparent;
+  transition: background 0.15s;
+}
+.ty-btn-outline-accent:hover {
+  background: var(--ty-accent-light);
+}
+
+/* Pagination button */
+.ty-btn-page {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--ty-radius-sm);
+  border: 1px solid var(--ty-border);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ty-text-muted);
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+.ty-btn-page:hover {
+  border-color: var(--ty-accent-border);
+  color: var(--ty-accent);
+}
+
+/* Large CTA button */
+.ty-btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--ty-radius-sm);
+  background: var(--ty-accent);
+  color: #fff;
+  font-family: var(--ty-font-head);
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.ty-btn-cta:hover {
+  background: var(--ty-accent-hover);
+  transform: translateY(-1px);
+}
+
+/* Feature card hover */
+.ty-feature-card {
+  background: var(--ty-bg);
+  border: 1px solid var(--ty-border);
+  border-radius: var(--ty-radius);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+.ty-feature-card:hover {
+  box-shadow: var(--ty-shadow);
+  transform: translateY(-2px);
+}
+
+/* Article card hover */
+.ty-article-card {
+  background: var(--ty-bg);
+  border: 1px solid var(--ty-border);
+  border-radius: var(--ty-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  cursor: pointer;
+  height: 100%;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+.ty-article-card:hover {
+  box-shadow: var(--ty-shadow);
+  transform: translateY(-2px);
+  border-color: var(--ty-accent-border);
+}
+.ty-article-card h3 {
+  font-family: var(--ty-font-head);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ty-text);
+  line-height: 1.25;
+  transition: color 0.15s;
+}
+.ty-article-card:hover h3 {
+  color: var(--ty-accent);
+}
+
+/* Read more link */
+.ty-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--ty-accent);
+  margin-top: auto;
+  transition: gap 0.2s;
+}
+.ty-read-more:hover {
+  gap: 0.6rem;
+}
+
+/* Footer links */
+.ty-footer-link {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  transition: color 0.15s;
+}
+.ty-footer-link:hover {
+  color: #f8fafc;
+}
+
+/* Logo link */
+.ty-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--ty-font-head);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+  color: var(--ty-text);
+  transition: opacity 0.15s;
+}
+.ty-logo:hover {
+  opacity: 0.8;
+}
+
+/* Footer logo */
+.ty-footer-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--ty-font-head);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #f8fafc;
+  transition: opacity 0.15s;
+}
+.ty-footer-logo:hover {
+  opacity: 0.8;
+}
+
+/* ── Centered Accordion FAQ (Image 2 style) ──────────────────────────────── */
+.ty-faq-section {
+  width: 100%;
+  max-width: 48rem;
+  margin-inline: auto;
+  padding: 3rem 1rem;
+}
+.ty-faq-badge-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.ty-faq-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #b45309;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+.ty-faq-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+@media (min-width: 640px) {
+  .ty-faq-title {
+    font-size: 2.25rem;
+  }
+}
+.ty-faq-subtitle {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+.ty-faq-subcontact {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-bottom: 2.5rem;
+}
+.ty-faq-subcontact a {
+  color: #0f172a;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ty-faq-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #e2e8f0;
+}
+.ty-faq-item {
+  border-bottom: 1px solid #e2e8f0;
+}
+.ty-faq-trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 1rem;
+}
+.ty-faq-question {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #0f172a;
+  transition: color 0.15s ease;
+  line-height: 1.4;
+}
+.ty-faq-trigger:hover .ty-faq-question {
+  color: var(--ty-accent, #059669);
+}
+.ty-faq-icon {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #94a3b8;
+  transition:
+    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.15s ease;
+}
+.ty-faq-trigger[data-state="open"] .ty-faq-icon {
+  transform: rotate(180deg);
+  color: var(--ty-accent, #059669);
+}
+.ty-faq-answer {
+  color: #475569;
+  font-size: 0.975rem;
+  line-height: 1.65;
+  padding-bottom: 1.25rem;
+  padding-right: 1.5rem;
+}
