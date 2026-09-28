@@ -13,10 +13,9 @@ Draft/Publish workflow on every document.
 
 - **Pages** — standalone pages (a home page, an about page, a landing page).
 - **Articles** — blog/news style content, with an excerpt, cover image, author,
-  categories and tags.
-- **Categories** and **Tags** — the taxonomy you attach to articles. An
-  article has one primary category, any number of additional categories, and
-  any number of tags.
+  categories and tags. Enter tags as comma-separated text.
+- **Categories** — the taxonomy attached to articles. An article has one
+  primary category and any number of additional categories.
 - **Media** — images used across pages, articles and blocks.
 
 ## 2. Building a page or article from blocks

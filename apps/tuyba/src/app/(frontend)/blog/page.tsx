@@ -45,6 +45,19 @@ function getPrimaryCategory(article: Record<string, unknown>): string | undefine
     : undefined;
 }
 
+function getCoverImage(
+  article: Record<string, unknown>,
+): { url: string; alt?: string } | undefined {
+  const cover = article.coverImage;
+  if (!cover || typeof cover !== "object") return undefined;
+  const image = cover as Record<string, unknown>;
+  if (typeof image.url !== "string") return undefined;
+  return {
+    url: image.url,
+    ...(typeof image.alt === "string" ? { alt: image.alt } : {}),
+  };
+}
+
 export default async function BlogIndexPage({ searchParams }: BlogIndexProps) {
   const page = parsePage((await searchParams).page);
   const origin = serverURL();
@@ -264,6 +277,7 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexProps) {
                       ? ((article as Record<string, unknown>).excerpt as string)
                       : undefined
                   }
+                  coverImage={getCoverImage(article as Record<string, unknown>)}
                   categoryName={getPrimaryCategory(article as Record<string, unknown>)}
                   isPodcast={Boolean((article as Record<string, unknown>).isPodcastEpisode)}
                   isNews={Boolean((article as Record<string, unknown>).newsArticle)}

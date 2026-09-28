@@ -260,11 +260,21 @@ export function suggestInternalLinks(
     return typeof slug === "string" ? [slug] : [];
   }
 
+  function tagsOf(field: unknown): string[] {
+    if (typeof field === "string") {
+      return field
+        .split(",")
+        .map((tag) => tag.trim().toLowerCase())
+        .filter(Boolean);
+    }
+    return slugsOf(field);
+  }
+
   const currentCategorySlugs = new Set([
     ...slugsOf(currentDoc.primaryCategory),
     ...slugsOf(currentDoc.additionalCategories),
   ]);
-  const currentTagSlugs = new Set(slugsOf(currentDoc.tags));
+  const currentTags = new Set(tagsOf(currentDoc.tags));
 
   const suggestions: InternalLinkSuggestion[] = [];
   for (const doc of allPublishedDocs) {
@@ -272,11 +282,11 @@ export function suggestInternalLinks(
       ...slugsOf(doc.primaryCategory),
       ...slugsOf(doc.additionalCategories),
     ]);
-    const docTags = new Set(slugsOf(doc.tags));
+    const docTags = new Set(tagsOf(doc.tags));
 
     let shared = 0;
     for (const s of docCats) if (currentCategorySlugs.has(s)) shared++;
-    for (const s of docTags) if (currentTagSlugs.has(s)) shared++;
+    for (const s of docTags) if (currentTags.has(s)) shared++;
 
     if (shared > 0) {
       suggestions.push({

@@ -71,6 +71,19 @@ function getPrimaryCategory(article: Record<string, unknown>): string | undefine
   return typeof c.name === "string" ? c.name : undefined;
 }
 
+function getCoverImage(
+  article: Record<string, unknown>,
+): { url: string; alt?: string } | undefined {
+  const cover = article.coverImage;
+  if (!cover || typeof cover !== "object") return undefined;
+  const image = cover as Record<string, unknown>;
+  if (typeof image.url !== "string") return undefined;
+  return {
+    url: image.url,
+    ...(typeof image.alt === "string" ? { alt: image.alt } : {}),
+  };
+}
+
 export default async function HomePage() {
   const { docs: articles } = await contentClient.getArticles({ limit: 6 });
 
@@ -448,6 +461,7 @@ export default async function HomePage() {
                           ? ((articles[0] as Record<string, unknown>).excerpt as string)
                           : undefined
                       }
+                      coverImage={getCoverImage(articles[0] as Record<string, unknown>)}
                       categoryName={getPrimaryCategory(articles[0] as Record<string, unknown>)}
                       isPodcast={Boolean((articles[0] as Record<string, unknown>).isPodcastEpisode)}
                       isNews={Boolean((articles[0] as Record<string, unknown>).newsArticle)}
@@ -473,6 +487,7 @@ export default async function HomePage() {
                             ? ((a as Record<string, unknown>).excerpt as string)
                             : undefined
                         }
+                        coverImage={getCoverImage(a as Record<string, unknown>)}
                         categoryName={getPrimaryCategory(a as Record<string, unknown>)}
                         isPodcast={Boolean((a as Record<string, unknown>).isPodcastEpisode)}
                         isNews={Boolean((a as Record<string, unknown>).newsArticle)}
@@ -501,6 +516,7 @@ export default async function HomePage() {
                           ? ((a as Record<string, unknown>).excerpt as string)
                           : undefined
                       }
+                      coverImage={getCoverImage(a as Record<string, unknown>)}
                       categoryName={getPrimaryCategory(a as Record<string, unknown>)}
                       isPodcast={Boolean((a as Record<string, unknown>).isPodcastEpisode)}
                       isNews={Boolean((a as Record<string, unknown>).newsArticle)}

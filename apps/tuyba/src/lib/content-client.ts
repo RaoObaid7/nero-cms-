@@ -53,7 +53,7 @@ const payloadQueryClient: ContentQueryClient = {
       draft: args.draft,
       limit: args.limit,
       page: args.page,
-      depth: args.depth,
+      depth: args.depth ?? 1,
       sort: args.sort,
       overrideAccess: args.draft === true,
     });

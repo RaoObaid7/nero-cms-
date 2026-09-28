@@ -15,7 +15,3 @@ export function articlePath(slug: string): string {
 export function categoryPath(slug: string): string {
   return `/category/${slug}`;
 }
-
-export function tagPath(slug: string): string {
-  return `/tag/${slug}`;
-}

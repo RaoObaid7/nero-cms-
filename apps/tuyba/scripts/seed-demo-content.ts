@@ -51,11 +51,6 @@ async function main(): Promise<void> {
     description: "Planning an umrah trip.",
   });
 
-  const tag = await upsertBySlug(payload, "tags", "family-travel", {
-    name: "Family Travel",
-    slug: "family-travel",
-  });
-
   await upsertBySlug(payload, "pages", "about", {
     title: "About TUYBA",
     slug: "about",
@@ -96,7 +91,7 @@ async function main(): Promise<void> {
     _status: "published",
     excerpt: "What to look for when distance, prayer times and family space all matter.",
     primaryCategory: category.id,
-    tags: [tag.id],
+    tags: "Family Travel",
     layout: [
       {
         blockType: "callout",

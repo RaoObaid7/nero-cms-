@@ -35,6 +35,14 @@ describe("Articles collection", () => {
     );
   });
 
+  it("accepts article tags as free-form text", () => {
+    const tags = Articles.fields.find((field) => "name" in field && field.name === "tags");
+    expect(tags).toMatchObject({ name: "tags", type: "text" });
+    expect(tags && "admin" in tags && tags.admin).toMatchObject({
+      components: { Field: { path: "@nero/cms-core/client#TagsField" } },
+    });
+  });
+
   it("enforces scheduled publish via a beforeChange hook", () => {
     expect(Articles.hooks?.beforeChange).toHaveLength(1);
   });

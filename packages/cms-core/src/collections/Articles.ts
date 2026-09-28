@@ -130,10 +130,15 @@ export function buildArticlesCollection(
       },
       {
         name: "tags",
-        type: "relationship",
-        relationTo: "tags",
-        hasMany: true,
-        admin: { position: "sidebar" },
+        type: "text",
+        admin: {
+          position: "sidebar",
+          components: {
+            Field: {
+              path: "@nero/cms-core/client#TagsField",
+            },
+          },
+        },
       },
       publishAtField,
       {

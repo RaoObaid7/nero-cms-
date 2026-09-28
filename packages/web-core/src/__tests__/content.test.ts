@@ -243,7 +243,7 @@ interface StoredArticle {
   _status: "draft" | "published";
   primaryCategory?: { slug: string };
   additionalCategories?: { slug: string }[];
-  tags?: { slug: string }[];
+  tags?: string;
 }
 
 interface StoredTerm {
@@ -326,7 +326,7 @@ describe("createContentClient — taxonomy and article listing", () => {
       title: "Oldest",
       _status: "published",
       primaryCategory: { slug: "news" },
-      tags: [{ slug: "featured" }],
+      tags: "featured",
     },
     {
       id: "2",
@@ -334,7 +334,7 @@ describe("createContentClient — taxonomy and article listing", () => {
       title: "Newest",
       _status: "published",
       additionalCategories: [{ slug: "news" }],
-      tags: [{ slug: "guides" }],
+      tags: "guides",
     },
     {
       id: "3",
@@ -372,13 +372,6 @@ describe("createContentClient — taxonomy and article listing", () => {
     const result = await client.getArticles({ categorySlug: "news" });
 
     expect(result.docs.map((doc) => doc.slug).sort()).toEqual(["newest", "oldest"]);
-  });
-
-  it("filters articles by tag slug", async () => {
-    const client = createContentClient(createTaxonomyFakeClient(ARTICLES, CATEGORIES));
-    const result = await client.getArticles({ tagSlug: "guides" });
-
-    expect(result.docs.map((doc) => doc.slug)).toEqual(["newest"]);
   });
 
   it("paginates article listings", async () => {

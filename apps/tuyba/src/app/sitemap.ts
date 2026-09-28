@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { contentClient } from "@/lib/content-client";
-import { articlePath, categoryPath, pagePath, tagPath } from "@/lib/urls";
+import { articlePath, categoryPath, pagePath } from "@/lib/urls";
 
 // Reads through the Payload local API; excludes drafts and
 // scheduled-but-not-due content via the same published-only default every
@@ -25,13 +25,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // `limit: 0` asks Payload for every matching document instead of its
   // default page size, so the sitemap is never silently truncated.
-  const [{ docs: pages }, { docs: articles }, { docs: categories }, { docs: tags }] =
-    await Promise.all([
-      contentClient.getPages({ limit: 0 }),
-      contentClient.getArticles({ limit: 0 }),
-      contentClient.getCategories({ limit: 0 }),
-      contentClient.getTags({ limit: 0 }),
-    ]);
+  const [{ docs: pages }, { docs: articles }, { docs: categories }] = await Promise.all([
+    contentClient.getPages({ limit: 0 }),
+    contentClient.getArticles({ limit: 0 }),
+    contentClient.getCategories({ limit: 0 }),
+  ]);
 
   const entries: MetadataRoute.Sitemap = [
     { url: origin, changeFrequency: "weekly", priority: 1 },
@@ -63,14 +61,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${origin}${categoryPath(category.slug)}`,
       changeFrequency: "weekly",
       priority: 0.4,
-    });
-  }
-
-  for (const tag of tags) {
-    entries.push({
-      url: `${origin}${tagPath(tag.slug)}`,
-      changeFrequency: "weekly",
-      priority: 0.3,
     });
   }
 

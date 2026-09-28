@@ -44,8 +44,6 @@ export interface ArticleListOptions extends QueryDraftOption {
   page?: number;
   /** Restricts the listing to articles whose primary or additional category matches this slug. */
   categorySlug?: string;
-  /** Restricts the listing to articles carrying this tag slug. */
-  tagSlug?: string;
 }
 
 export interface ContentClient {
@@ -229,9 +227,8 @@ const ARTICLE_LIST_SORT = "-createdAt";
 
 /**
  * Articles get their own listing function instead of sharing
- * `createCollectionReader.list` verbatim: taxonomy filtering and
- * newest-first ordering are specific to the article listing/category/tag
- * routes and don't apply to `pages`.
+ * `createCollectionReader.list` verbatim: category filtering and newest-first
+ * ordering are specific to article listings and don't apply to `pages`.
  */
 async function listArticles(
   client: ContentQueryClient,
@@ -248,9 +245,6 @@ async function listArticles(
         { "additionalCategories.slug": { equals: options.categorySlug } },
       ],
     });
-  }
-  if (options.tagSlug) {
-    taxonomyClauses.push({ "tags.slug": { equals: options.tagSlug } });
   }
   const baseWhere = taxonomyClauses.length > 0 ? { and: taxonomyClauses } : undefined;
 

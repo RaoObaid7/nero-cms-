@@ -145,19 +145,6 @@ async function main() {
     description: "Audio episodes from the TUYBA show.",
   });
 
-  const tagFamily = await upsert(payload, "tags", "family-travel", {
-    name: "Family Travel",
-    slug: "family-travel",
-  });
-  const tagBudget = await upsert(payload, "tags", "budget-tips", {
-    name: "Budget Tips",
-    slug: "budget-tips",
-  });
-  const tagFirstTime = await upsert(payload, "tags", "first-time", {
-    name: "First-Time Pilgrims",
-    slug: "first-time",
-  });
-
   // ── Find or create an author ───────────────────────────────────────────────
   const usersResult = await payload.find({
     collection: "users",
@@ -180,7 +167,7 @@ async function main() {
     author: authorId,
     primaryCategory: catGuides.id,
     additionalCategories: [catTravel.id],
-    tags: [tagFamily.id, tagFirstTime.id],
+    tags: "Family Travel, First-Time Pilgrims",
     body: lexicalArticle([
       {
         heading: "Why location is everything",
@@ -245,7 +232,7 @@ async function main() {
       excerpt: "You do not need to spend a fortune to have a spiritually meaningful Umrah.",
       author: authorId,
       primaryCategory: catGuides.id,
-      tags: [tagBudget.id, tagFirstTime.id],
+      tags: "Budget Tips, First-Time Pilgrims",
       body: lexicalBody(
         "Traveling for Umrah does not have to break the bank. With careful planning and the right tools, a meaningful journey is achievable at almost any budget.",
         "Book flights in shoulder season — the period between major holidays — and you can save up to 40% compared to peak Ramadan fares.",
@@ -274,7 +261,7 @@ async function main() {
       "Everything pilgrims need to know about travelling during Ramadan — from booking timelines to iftar etiquette.",
     author: authorId,
     primaryCategory: catGuides.id,
-    tags: [tagFamily.id],
+    tags: "Family Travel",
     body: lexicalBody(
       "Ramadan travel requires months of lead time and a different mindset from any other trip. This guide covers everything from the moment you decide to go.",
       "Flight prices in the final 10 days of Ramadan — Laylat al-Qadr season — are among the highest of the year. Booking 6 months out is not excessive.",
@@ -295,7 +282,7 @@ async function main() {
       "Our new comparison feature lets you rank halal hotels by distance, price and certification — all in one view.",
     author: authorId,
     primaryCategory: catTravel.id,
-    tags: [tagFamily.id],
+    tags: "Family Travel",
     newsArticle: true, // Sprint 3B — shows in news sitemap
     body: lexicalBody(
       "TUYBA today launched a side-by-side hotel comparison tool, making it easier than ever to find halal-certified accommodation near Islamic landmarks.",
@@ -321,7 +308,7 @@ async function main() {
       "Sheikh Nasser and guest Fatima Al-Rashidi discuss practical tips for taking children on Umrah for the first time.",
     author: authorId,
     primaryCategory: catPodcast.id,
-    tags: [tagFamily.id, tagFirstTime.id],
+    tags: "Family Travel, First-Time Pilgrims",
     // Sprint 3B podcast fields
     isPodcastEpisode: true,
     podcastEpisodeNumber: 12,
@@ -374,7 +361,7 @@ async function main() {
     excerpt: "A complete walkthrough of every ritual — from entering Ihram to the final haircut.",
     author: authorId,
     primaryCategory: catGuides.id,
-    tags: [tagFirstTime.id],
+    tags: "First-Time Pilgrims",
     customSchema, // Sprint 3B — overrides generated JSON-LD
     body: lexicalArticle([
       {

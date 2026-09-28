@@ -4,6 +4,7 @@ interface ArticleCardProps {
   slug: string;
   title: string;
   excerpt?: string;
+  coverImage?: { url: string; alt?: string };
   categoryName?: string;
   isPodcast?: boolean;
   isNews?: boolean;
@@ -14,6 +15,7 @@ interface ArticleCardProps {
 export function ArticleCard({
   title,
   excerpt,
+  coverImage,
   categoryName,
   isPodcast,
   isNews,
@@ -24,6 +26,20 @@ export function ArticleCard({
 
   return (
     <article className="ty-article-card" style={{ padding: isLarge ? "2rem" : "1.5rem" }}>
+      {coverImage && (
+        <img
+          src={coverImage.url}
+          alt={coverImage.alt ?? ""}
+          loading="lazy"
+          style={{
+            width: "100%",
+            aspectRatio: "16 / 9",
+            objectFit: "cover",
+            borderRadius: "var(--ty-radius-sm)",
+          }}
+        />
+      )}
+
       {/* Badges */}
       <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
         {categoryName && (
