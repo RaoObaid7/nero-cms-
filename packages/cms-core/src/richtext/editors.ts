@@ -32,6 +32,9 @@ function bodyEditorFeatures(
     // see `blockCard/registry.ts`. The `layout` field keeps rendering the
     // unmodified `blocks` passed in here.
     BlocksFeature({ blocks: withBlockCards(blocks) }),
+    // Right-hand block settings panel each card portals its fields into
+    // while focused — see `inspector/InspectorFeature.ts`.
+    InspectorFeature(),
   ];
 }
 

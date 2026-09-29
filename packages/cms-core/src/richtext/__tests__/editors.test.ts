@@ -22,6 +22,11 @@ describe("buildBodyEditor's feature list", () => {
       expect(features.some((feature) => feature.key === defaultFeature.key)).toBe(true);
     }
   });
+
+  it("includes the block settings inspector (key 'nero-inspector')", () => {
+    const features = bodyEditorFeatures(fakeDefaultFeatures, fakeBlocks);
+    expect(features.some((feature) => feature.key === "nero-inspector")).toBe(true);
+  });
 });
 
 describe("buildInlineTextEditor's feature list", () => {
