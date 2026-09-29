@@ -16,8 +16,10 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@lexical/react": "0.41.0",
     "@nero/web-core": "workspace:*",
     "@payloadcms/richtext-lexical": "3.89.0",
+    "lexical": "0.41.0",
     "payload": "3.89.0"
   },
   "peerDependencies": {
