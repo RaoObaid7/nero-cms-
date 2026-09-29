@@ -1,11 +1,11 @@
 import type { CollectionConfig, FieldAccess } from "payload";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { isAdminOrEditor, publishedOrAuthenticated } from "../access";
 import { blockCatalog } from "../blocks";
 import { publishAtField } from "../fields/publishAt";
 import { slugField } from "../fields/slugField";
 import { seoFields } from "../fields/seo";
 import { enforceScheduledPublish } from "../hooks/enforceScheduledPublish";
+import { buildBodyEditor } from "../richtext/editors";
 
 export interface PagesSeoOptions {
   seoEnabled: boolean;
@@ -47,7 +47,7 @@ export function buildPagesCollection(
       {
         name: "content",
         type: "richText",
-        editor: lexicalEditor(),
+        editor: buildBodyEditor({ blocks: blockCatalog }),
       },
       {
         name: "layout",

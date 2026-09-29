@@ -1,21 +1,4 @@
 import type { CollectionConfig, FieldAccess } from "payload";
-import {
-  lexicalEditor,
-  HeadingFeature,
-  BlockquoteFeature,
-  BoldFeature,
-  ItalicFeature,
-  UnderlineFeature,
-  StrikethroughFeature,
-  InlineCodeFeature,
-  OrderedListFeature,
-  UnorderedListFeature,
-  LinkFeature,
-  HorizontalRuleFeature,
-  AlignFeature,
-  UploadFeature,
-  FixedToolbarFeature,
-} from "@payloadcms/richtext-lexical";
 import { isAdminOrEditor, publishedOrAuthenticated } from "../access";
 import { blockCatalog } from "../blocks";
 import { publishAtField } from "../fields/publishAt";
@@ -23,6 +6,7 @@ import { slugField } from "../fields/slugField";
 import { seoFields } from "../fields/seo";
 import { enforceScheduledPublish } from "../hooks/enforceScheduledPublish";
 import { validateSafeHref } from "../blocks/shared";
+import { buildBodyEditor } from "../richtext/editors";
 
 export interface ArticlesSeoOptions {
   seoEnabled: boolean;
@@ -71,24 +55,7 @@ export function buildArticlesCollection(
       {
         name: "body",
         type: "richText",
-        editor: lexicalEditor({
-          features: () => [
-            HeadingFeature({ enabledHeadingSizes: ["h1", "h2", "h3", "h4"] }),
-            BoldFeature(),
-            ItalicFeature(),
-            UnderlineFeature(),
-            StrikethroughFeature(),
-            InlineCodeFeature(),
-            BlockquoteFeature(),
-            OrderedListFeature(),
-            UnorderedListFeature(),
-            LinkFeature(),
-            UploadFeature(),
-            HorizontalRuleFeature(),
-            AlignFeature(),
-            FixedToolbarFeature(),
-          ],
-        }),
+        editor: buildBodyEditor({ blocks: blockCatalog }),
       },
       {
         name: "layout",

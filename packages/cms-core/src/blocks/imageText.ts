@@ -1,5 +1,5 @@
 import type { Block } from "payload";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { buildInlineTextEditor } from "../richtext/editors";
 
 export const IMAGE_TEXT_BLOCK_SLUG = "imageText";
 
@@ -23,7 +23,8 @@ export const ImageTextBlock: Block = {
       name: "content",
       type: "richText",
       required: true,
-      editor: lexicalEditor(),
+      // No `BlocksFeature` here — see the matching comment on RichTextBlock.
+      editor: buildInlineTextEditor(),
     },
     {
       name: "layout",

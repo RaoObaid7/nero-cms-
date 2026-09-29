@@ -67,6 +67,8 @@ export {
 } from "./blocks";
 export type { BlockSlug } from "./blocks";
 
+export { buildBodyEditor, buildInlineTextEditor } from "./richtext/editors";
+
 export { enforceScheduledPublish } from "./hooks";
 
 export { slugField } from "./fields/slugField";

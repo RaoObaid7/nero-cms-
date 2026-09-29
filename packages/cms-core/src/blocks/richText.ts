@@ -1,5 +1,5 @@
 import type { Block } from "payload";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { buildInlineTextEditor } from "../richtext/editors";
 
 export const RICH_TEXT_BLOCK_SLUG = "richText";
 
@@ -15,7 +15,11 @@ export const RichTextBlock: Block = {
       name: "content",
       type: "richText",
       required: true,
-      editor: lexicalEditor(),
+      // This block is itself insertable inline into a body/content editor
+      // (see `buildBodyEditor`). Its own editor must never gain
+      // `BlocksFeature` — PRD section 6 forbids unlimited nesting, and this
+      // keeps nesting capped at one level.
+      editor: buildInlineTextEditor(),
     },
   ],
 };
