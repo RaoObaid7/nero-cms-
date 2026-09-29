@@ -11,3 +11,5 @@ export {
   ImageTextBlockCard,
   RichTextBlockCard,
 } from "../richtext/blockCard/blockCards";
+
+export { InspectorClientFeature } from "../richtext/inspector/InspectorClientFeature";

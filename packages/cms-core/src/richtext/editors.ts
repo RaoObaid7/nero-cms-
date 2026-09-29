@@ -2,6 +2,7 @@ import type { Block } from "payload";
 import { BlocksFeature, FixedToolbarFeature, HeadingFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import type { FeatureProviderServer } from "@payloadcms/richtext-lexical";
 import { withBlockCards } from "./blockCard/registry";
+import { InspectorFeature } from "./inspector/InspectorFeature";
 
 /**
  * Heading levels offered in the body/content editor's toolbar and slash
