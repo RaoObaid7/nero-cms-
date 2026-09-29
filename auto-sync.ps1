@@ -35,35 +35,44 @@ while ($true) {
 
     $changes = git status --porcelain 2>&1
 
-    if ($changes) {
-        $author    = git config user.name
-        if (!$author) { $author = "unknown" }
-        $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-        $count     = ($changes | Measure-Object -Line).Lines
+    if (-not $changes) {
+        $pullOut = git pull --rebase origin $BRANCH 2>&1
+        Log "No local changes - pulled latest from origin/$BRANCH"
+        continue
+    }
 
-        Log "Detected $count change(s) by $author - syncing..."
+    $author    = git config user.name
+    if (!$author) { $author = "unknown" }
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $count     = ($changes | Measure-Object -Line).Lines
 
-        git pull --rebase origin $BRANCH 2>&1 | Out-Null
-        git add -A 2>&1 | Out-Null
+    Log "Detected $count change(s) by $author - syncing..."
 
-        git commit -m "auto-save: $count file(s) by $author at $timestamp" 2>&1 | Out-Null
-        if ($LASTEXITCODE -ne 0) {
-            Log "Nothing new to commit - skipped"
-            continue
-        }
+    $pullOut = git pull --rebase origin $BRANCH 2>&1
+    Log "Pull: $pullOut"
 
-        git push origin $BRANCH 2>&1 | Out-Null
+    git add -A 2>&1 | Out-Null
+
+    $commitOut = git commit -m "auto-save: $count file(s) by $author at $timestamp" 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Log "Nothing new to commit - skipped"
+        continue
+    }
+    Log "Committed: $commitOut"
+
+    $pushOut = git push origin $BRANCH 2>&1
+    Log "Push output: $pushOut"
+    if ($LASTEXITCODE -eq 0) {
+        Log "Pushed OK -> origin/$BRANCH"
+    } else {
+        Log "Push failed - retrying in 15s..."
+        Start-Sleep -Seconds 15
+        $pushOut2 = git push origin $BRANCH 2>&1
+        Log "Retry push output: $pushOut2"
         if ($LASTEXITCODE -eq 0) {
-            Log "Pushed OK -> origin/$BRANCH"
+            Log "Retry push OK"
         } else {
-            Log "Push failed - retrying in 15s..."
-            Start-Sleep -Seconds 15
-            git push origin $BRANCH 2>&1 | Out-Null
-            if ($LASTEXITCODE -eq 0) {
-                Log "Retry push OK"
-            } else {
-                Log "ERROR: push failed twice. Check GitHub credentials."
-            }
+            Log "ERROR: push failed twice. Check GitHub credentials."
         }
     }
 }
