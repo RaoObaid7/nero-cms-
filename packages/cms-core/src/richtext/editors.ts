@@ -1,6 +1,7 @@
 import type { Block } from "payload";
 import { BlocksFeature, FixedToolbarFeature, HeadingFeature, lexicalEditor } from "@payloadcms/richtext-lexical";
 import type { FeatureProviderServer } from "@payloadcms/richtext-lexical";
+import { withBlockCards } from "./blockCard/registry";
 
 /**
  * Heading levels offered in the body/content editor's toolbar and slash
@@ -25,7 +26,11 @@ function bodyEditorFeatures(
     ...defaultFeatures,
     HeadingFeature({ enabledHeadingSizes: [...BODY_HEADING_SIZES] }),
     FixedToolbarFeature(),
-    BlocksFeature({ blocks }),
+    // `withBlockCards` gives the inline-inserted copy of each block its
+    // Gutenberg-style card (icon + label header, focus-driven collapse) —
+    // see `blockCard/registry.ts`. The `layout` field keeps rendering the
+    // unmodified `blocks` passed in here.
+    BlocksFeature({ blocks: withBlockCards(blocks) }),
   ];
 }
 
